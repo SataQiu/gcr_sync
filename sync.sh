@@ -1,7 +1,7 @@
 #!/bin/bash
 max_process=$1
 MY_REPO=shidaqiu
-interval=/
+interval=.
 max_per=70
 google_list=repo/google
 #--------------------------
