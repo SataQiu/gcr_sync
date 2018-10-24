@@ -157,6 +157,15 @@ image_pull(){
     # REPOSITORY is the name of the dir,convert the '/' to '.',and cut the last '.'
     [ ! -d "$domain/$namespace" ] && mkdir -p $domain/$namespace
     while read SYNC_IMAGE_NAME;do
+	    # 过滤开始, 只下载需要的镜像
+		fr1=$(echo $SYNC_IMAGE_NAME | grep -i "kube")
+		fr2=$(echo $SYNC_IMAGE_NAME | grep -i "etcd")
+		fr3=$(echo $SYNC_IMAGE_NAME | grep -i "DNS")
+		if [[ fr1 == "" && fr2 == "" && fr3 == "" ]];then
+		    echo "ignore image: "$SYNC_IMAGE_NAME
+		    continue
+		fi
+		# 过滤结束, 只下载需要的镜像
         image_name=${SYNC_IMAGE_NAME##*/}
         MY_REPO_IMAGE_NAME=${Prefix}${image_name}
         [ ! -d "$domain/$namespace/$image_name" ] && mkdir -p "$domain/$namespace/$image_name"
